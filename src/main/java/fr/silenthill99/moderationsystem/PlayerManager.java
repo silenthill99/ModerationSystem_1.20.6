@@ -7,7 +7,7 @@ public class PlayerManager {
 
     public static final Main main = Main.getInstance();
     private final Player player;
-    private ItemStack[] items = new ItemStack[40];
+    private final ItemStack[] items = new ItemStack[40];
 
     public PlayerManager(Player player) {
         this.player = player;
@@ -64,5 +64,9 @@ public class PlayerManager {
         player.getInventory().setChestplate(items[37]);
         player.getInventory().setLeggings(items[38]);
         player.getInventory().setBoots(items[39]);
+    }
+
+    public static boolean isInModerationMod(Player player) {
+        return Main.getInstance().moderateurs.contains(player.getUniqueId());
     }
 }
