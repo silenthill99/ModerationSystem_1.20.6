@@ -30,7 +30,6 @@ public class PlayerManager {
     }
 
     public void saveInventory() {
-        player.sendMessage("save de l'inventaire !");
         for (int slot = 0; slot < 36; slot++) {
             ItemStack item = player.getInventory().getItem(slot);
             if (item != null) {
