@@ -1,0 +1,9 @@
+name: ModerationSystem
+version: '${version}'
+main: fr.silenthill99.moderationsystem.Main
+api-version: '1.20'
+commands:
+  mod:
+    permission: moderation.mod
+    permission-message: §cVous n'avez pas la permission d'éxécuter cette commande !
+  report:
