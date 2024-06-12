@@ -31,6 +31,8 @@ public class ModerateurCommand implements CommandExecutor {
             player.sendMessage(ChatColor.RED + "vous n'êtes à présent plus dans le mode modération");
             pm.giveInventory();
             pm.destroy();
+            player.setAllowFlight(false);
+            player.setFlying(false);
             return true;
         }
         PlayerManager pm = new PlayerManager(player);
