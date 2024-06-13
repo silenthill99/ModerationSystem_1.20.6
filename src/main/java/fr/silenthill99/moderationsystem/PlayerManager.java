@@ -1,5 +1,6 @@
 package fr.silenthill99.moderationsystem;
 
+import fr.silenthill99.CustomFiles;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -66,6 +67,6 @@ public class PlayerManager {
     }
 
     public static boolean isInModerationMod(Player player) {
-        return Main.getInstance().moderateurs.contains(player.getUniqueId());
+        return CustomFiles.MODERATION.getConfig().getStringList("uuid").contains(player.getUniqueId().toString());
     }
 }

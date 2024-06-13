@@ -1,5 +1,6 @@
 package fr.silenthill99.moderationsystem.commands;
 
+import fr.silenthill99.CustomFiles;
 import fr.silenthill99.moderationsystem.CustomItems;
 import fr.silenthill99.moderationsystem.Main;
 import fr.silenthill99.moderationsystem.PlayerManager;
@@ -9,6 +10,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 @SuppressWarnings("deprecation")
 public class ModerateurCommand implements CommandExecutor {
@@ -23,22 +26,32 @@ public class ModerateurCommand implements CommandExecutor {
             return false;
         }
 
-        if (main.moderateurs.contains(player.getUniqueId())) {
-            PlayerManager pm = PlayerManager.getFromPlayer(player);
+        PlayerManager pm = new PlayerManager(player);
 
-            main.moderateurs.remove(player.getUniqueId());
+        if (PlayerManager.isInModerationMod(player)) {
+            pm = PlayerManager.getFromPlayer(player);
+            try {
+                CustomFiles.MODERATION.removeValue(player);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             player.getInventory().clear();
             player.sendMessage(ChatColor.RED + "vous n'êtes à présent plus dans le mode modération");
-            pm.giveInventory();
-            pm.destroy();
+            if (pm != null) {
+                pm.giveInventory();
+                pm.destroy();
+            }
             player.setAllowFlight(false);
             player.setFlying(false);
             return true;
         }
-        PlayerManager pm = new PlayerManager(player);
         pm.init();
 
-        main.moderateurs.add(player.getUniqueId());
+        try {
+            CustomFiles.MODERATION.addValue(player);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         player.sendMessage(ChatColor.GREEN + "Vous êtes à présent dans le mode modération !");
         pm.saveInventory();
 

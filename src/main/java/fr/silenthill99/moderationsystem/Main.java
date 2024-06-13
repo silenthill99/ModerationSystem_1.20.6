@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -20,7 +19,7 @@ public final class Main extends JavaPlugin {
         return instance;
     }
 
-    public ArrayList<UUID> moderateurs = new ArrayList<>();
+//    public ArrayList<UUID> moderateurs = new ArrayList<>();
     public HashMap<UUID, PlayerManager> players = new HashMap<>();
 
     @SuppressWarnings("DataFlowIssue")
