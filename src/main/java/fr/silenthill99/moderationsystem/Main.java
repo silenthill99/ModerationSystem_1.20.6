@@ -4,6 +4,7 @@ import fr.silenthill99.moderationsystem.commands.ModerateurCommand;
 import fr.silenthill99.moderationsystem.commands.ReportCommand;
 import fr.silenthill99.moderationsystem.inventory.InventoryManager;
 import fr.silenthill99.moderationsystem.listener.Events;
+import fr.silenthill99.moderationsystem.mysql.DatabaseManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,14 +20,16 @@ public final class Main extends JavaPlugin {
         return instance;
     }
 
-//    public ArrayList<UUID> moderateurs = new ArrayList<>();
     public HashMap<UUID, PlayerManager> players = new HashMap<>();
+
+    DatabaseManager db;
 
     @SuppressWarnings("DataFlowIssue")
     @Override
     public void onEnable() {
         saveDefaultConfig();
         instance = this;
+        db = new DatabaseManager();
         getLogger().info("Le plugin est opérationnel !");
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new InventoryManager(), this);
@@ -37,6 +40,6 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        db.close();
     }
 }
