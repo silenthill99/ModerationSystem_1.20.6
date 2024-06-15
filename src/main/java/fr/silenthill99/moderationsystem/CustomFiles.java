@@ -1,6 +1,5 @@
-package fr.silenthill99;
+package fr.silenthill99.moderationsystem;
 
-import fr.silenthill99.moderationsystem.Main;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

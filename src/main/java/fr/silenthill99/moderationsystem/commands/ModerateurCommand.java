@@ -1,6 +1,6 @@
 package fr.silenthill99.moderationsystem.commands;
 
-import fr.silenthill99.CustomFiles;
+import fr.silenthill99.moderationsystem.CustomFiles;
 import fr.silenthill99.moderationsystem.CustomItems;
 import fr.silenthill99.moderationsystem.Main;
 import fr.silenthill99.moderationsystem.PlayerManager;

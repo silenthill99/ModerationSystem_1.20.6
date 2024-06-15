@@ -1,6 +1,5 @@
 package fr.silenthill99.moderationsystem;
 
-import fr.silenthill99.CustomFiles;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
