@@ -1,17 +1,20 @@
 package fr.silenthill99.moderationsystem;
 
 import fr.silenthill99.CustomFiles;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerManager {
 
-    public static final Main main = Main.getInstance();
+    private static final Main main = Main.getInstance();
     private final Player player;
     private final ItemStack[] items = new ItemStack[40];
+    private boolean vanished;
 
     public PlayerManager(Player player) {
         this.player = player;
+        vanished = false;
     }
 
     public void init() {
@@ -68,5 +71,18 @@ public class PlayerManager {
 
     public static boolean isInModerationMod(Player player) {
         return CustomFiles.MODERATION.getConfig().getStringList("uuid").contains(player.getUniqueId().toString());
+    }
+
+    public boolean isVanished() {
+        return vanished;
+    }
+
+    public void setVanished(boolean vanished) {
+        this.vanished = vanished;
+        if (vanished) {
+            Bukkit.getOnlinePlayers().forEach(players -> players.hidePlayer(main, player));
+        } else {
+            Bukkit.getOnlinePlayers().forEach(players -> players.showPlayer(main, player));
+        }
     }
 }

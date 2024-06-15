@@ -2,6 +2,7 @@ package fr.silenthill99.moderationsystem;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 @SuppressWarnings({"unused", "deprecation"})
@@ -20,9 +21,12 @@ public enum CustomItems {
             .toItemStack()),
     KILLER(new ItemBuilder(Material.BLAZE_ROD).setName(ChatColor.RED + "Tueur de joueur")
             .addLore(ChatColor.GRAY + "Clique droit sur un joueur", ChatColor.GRAY + "pour le tuer")
-            .toItemStack()),
+            .addUnsafeEnchantment(Enchantment.KNOCKBACK, 5).toItemStack()),
     TP_RANDOM(new ItemBuilder(Material.ARROW).setName(ChatColor.GREEN + "Téléportation aléatoire")
             .addLore(ChatColor.GRAY + "Clique droit pour se téléporter", ChatColor.GRAY + "aléatoirement sur un joueur")
+            .toItemStack()),
+    VANISH(new ItemBuilder(Material.BLAZE_POWDER).setName(ChatColor.DARK_GREEN + "Vanish")
+            .addLore(ChatColor.GRAY + "Clique droit pour activer/désactiver", ChatColor.GRAY + "le vanish")
             .toItemStack())
     ;
     private final ItemStack item;

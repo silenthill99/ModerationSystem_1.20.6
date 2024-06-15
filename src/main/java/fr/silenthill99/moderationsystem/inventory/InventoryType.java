@@ -1,11 +1,13 @@
 package fr.silenthill99.moderationsystem.inventory;
 
+import fr.silenthill99.moderationsystem.inventory.hook.InventoryInv;
 import fr.silenthill99.moderationsystem.inventory.hook.ReportInventory;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum InventoryType {
+    INVENTAIRE(new InventoryInv()),
     REPORTS(new ReportInventory())
     ;
     private final AbstractInventory<?> inv;

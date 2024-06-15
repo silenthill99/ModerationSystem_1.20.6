@@ -1,6 +1,7 @@
 package fr.silenthill99.moderationsystem;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -42,6 +43,10 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addUnsafeEnchantment(Enchantment ench, int level) {
+        is.addUnsafeEnchantment(ench, level);
+        return this;
+    }
     public ItemStack toItemStack() {
         return is;
     }
