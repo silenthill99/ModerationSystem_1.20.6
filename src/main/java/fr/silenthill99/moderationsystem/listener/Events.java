@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Random;
 
 
+@SuppressWarnings("deprecation")
 public class Events implements Listener {
     private final Main main = Main.getInstance();
 
@@ -94,7 +95,7 @@ public class Events implements Listener {
             Player target = list.get(new Random().nextInt(list.size()));
             player.teleport(target);
             player.sendMessage(ChatColor.GREEN + "Vous avez été téléporté à " + ChatColor.YELLOW +
-                    target.getPlayer());
+                    target.getName());
         } else if (item.isSimilar(CustomItems.VANISH.getItem())) {
             PlayerManager mod = PlayerManager.getFromPlayer(player);
             mod.setVanished(!mod.isVanished());
@@ -145,5 +146,23 @@ public class Events implements Listener {
             event.setCancelled(!item.isSimilar(CustomItems.KB_TESTER.getItem()));
         }
 
+    }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+        String prefix = main.getConfig().getString("staff_tchat");
+
+        assert prefix != null;
+        if (event.getMessage().startsWith(prefix) && player.hasPermission("moderation.chat")) {
+            event.setCancelled(true);
+            for (Player players : Bukkit.getOnlinePlayers()) {
+                if (players.hasPermission("moderation.chat")) {
+                    players.sendMessage(ChatColor.DARK_GRAY + "(" + ChatColor.DARK_GREEN + ChatColor.UNDERLINE +
+                            "STAFF CHAT" + ChatColor.DARK_GRAY + ") " + ChatColor.GOLD + player.getName() +
+                            ChatColor.WHITE + ": " + ChatColor.YELLOW + event.getMessage().substring(1));
+                }
+            }
+        }
     }
 }

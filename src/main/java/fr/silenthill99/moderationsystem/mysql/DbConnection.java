@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class DbConnection {
 
     private static final Main main = Main.getInstance();
-    private DbCredentials dbCredentials;
+    private final DbCredentials dbCredentials;
     private Connection connection;
 
     public DbConnection(DbCredentials dbCredentials) {
@@ -33,6 +33,16 @@ public class DbConnection {
                 connection.close();
             }
         }
+    }
+
+    public Connection getConnection() throws SQLException {
+        if (this.connection != null) {
+            if (!this.connection.isClosed()) {
+                return this.connection;
+            }
+        }
+        connect();
+        return this.connection;
     }
 
 }
