@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -110,7 +111,6 @@ public class Events implements Listener {
         event.setCancelled(PlayerManager.isInModerationMod(player));
     }
 
-    @SuppressWarnings({"DanglingJavadoc", "StatementWithEmptyBody"})
     @EventHandler
     public void onInteractAtEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
@@ -128,6 +128,7 @@ public class Events implements Listener {
              * TODO
              */
         } else if (item.isSimilar(CustomItems.FREEZE.getItem())) {
+            if (!event.getHand().equals(EquipmentSlot.HAND)) return;
             if (main.getFreezedPlayers().containsKey(target.getUniqueId())) {
                 main.getFreezedPlayers().remove(target.getUniqueId());
                 target.sendMessage(ChatColor.GREEN + "Vous avez été unfreeze !");
