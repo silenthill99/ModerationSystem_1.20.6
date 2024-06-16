@@ -69,7 +69,7 @@ public class PlayerManager {
     }
 
     public static boolean isInModerationMod(Player player) {
-        return CustomFiles.MODERATION.getConfig().getStringList("uuid").contains(player.getUniqueId().toString());
+        return main.moderateurs.contains(player.getUniqueId());
     }
 
     public boolean isVanished() {
