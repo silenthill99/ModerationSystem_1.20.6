@@ -112,7 +112,7 @@ public class Events implements Listener {
 
     @SuppressWarnings({"DanglingJavadoc", "StatementWithEmptyBody"})
     @EventHandler
-    public void onInteractAtEntity(PlayerInteractAtEntityEvent event) {
+    public void onInteractAtEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
 
@@ -128,9 +128,15 @@ public class Events implements Listener {
              * TODO
              */
         } else if (item.isSimilar(CustomItems.FREEZE.getItem())) {
-            /**
-             * TODO
-             */
+            if (main.getFreezedPlayers().containsKey(target.getUniqueId())) {
+                main.getFreezedPlayers().remove(target.getUniqueId());
+                target.sendMessage(ChatColor.GREEN + "Vous avez été unfreeze !");
+                player.sendMessage(ChatColor.GREEN + "Vous avez unfreeze " + ChatColor.YELLOW + target.getName());
+            } else {
+                main.getFreezedPlayers().put(target.getUniqueId(), target.getLocation());
+                target.sendMessage(ChatColor.AQUA + "Vous avez été freeze par " + ChatColor.YELLOW + player.getName());
+                player.sendMessage(ChatColor.GREEN + "Vous avez freeze " + ChatColor.YELLOW + target.getName());
+            }
         } else if (item.isSimilar(CustomItems.KILLER.getItem())) {
             target.damage(target.getHealth());
         }

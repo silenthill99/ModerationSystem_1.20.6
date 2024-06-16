@@ -4,8 +4,10 @@ import fr.silenthill99.moderationsystem.commands.ModerateurCommand;
 import fr.silenthill99.moderationsystem.commands.ReportCommand;
 import fr.silenthill99.moderationsystem.inventory.InventoryManager;
 import fr.silenthill99.moderationsystem.listener.Events;
+import fr.silenthill99.moderationsystem.managers.FreezeRunnable;
 import fr.silenthill99.moderationsystem.mysql.DatabaseManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,6 +25,7 @@ public final class Main extends JavaPlugin {
 
     public HashMap<UUID, PlayerManager> players = new HashMap<>();
     public ArrayList<UUID> moderateurs = new ArrayList<>();
+    private HashMap<UUID, Location> freezedPlayers;
 
     DatabaseManager db;
 
@@ -38,6 +41,8 @@ public final class Main extends JavaPlugin {
         pm.registerEvents(new Events(), this);
         getCommand("mod").setExecutor(new ModerateurCommand());
         getCommand("report").setExecutor(new ReportCommand());
+        freezedPlayers = new HashMap<>();
+        new FreezeRunnable().runTaskTimer(this, 0, 20);
     }
 
     @Override
@@ -47,5 +52,9 @@ public final class Main extends JavaPlugin {
 
     public DatabaseManager getDatabaseManager() {
         return db;
+    }
+
+    public HashMap<UUID, Location> getFreezedPlayers() {
+        return freezedPlayers;
     }
 }
