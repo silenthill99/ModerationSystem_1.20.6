@@ -4,8 +4,10 @@ import fr.silenthill99.moderationsystem.commands.ModerateurCommand;
 import fr.silenthill99.moderationsystem.commands.ReportCommand;
 import fr.silenthill99.moderationsystem.inventory.InventoryManager;
 import fr.silenthill99.moderationsystem.listener.Events;
+import fr.silenthill99.moderationsystem.manager.PlayerManager;
+import fr.silenthill99.moderationsystem.manager.Report;
 import fr.silenthill99.moderationsystem.mysql.DatabaseManager;
-import fr.silenthill99.moderationsystem.mysql.MySQL;
+import fr.silenthill99.moderationsystem.mysql.Reports;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,11 +24,11 @@ public final class Main extends JavaPlugin {
     public static Main getInstance() {
         return instance;
     }
+    private Reports reports;
 
     public HashMap<UUID, PlayerManager> players = new HashMap<>();
     public ArrayList<UUID> moderateurs = new ArrayList<>();
     private HashMap<UUID, Location> freezedPlayers;
-    private final MySQL mySQL = new MySQL();
 
     DatabaseManager db;
 
@@ -43,16 +45,17 @@ public final class Main extends JavaPlugin {
         getCommand("mod").setExecutor(new ModerateurCommand());
         getCommand("report").setExecutor(new ReportCommand());
         freezedPlayers = new HashMap<>();
-        mySQL.createTables();
+        reports = new Reports();
+        reports.report(new Report(UUID.fromString("c7c29d3c-9c60-43a1-8e33-0d146749b340"), "Flo", "Essai"));
+        reports.report(new Report(UUID.fromString("c7c29d3c-9c60-43a1-8e33-0d146749b340"), "Flo", "Team McDo"));
+        reports.report(new Report(UUID.fromString("c7c29d3c-9c60-43a1-8e33-0d146749b340"), "Flo", "Insultes"));
+        reports.report(new Report(UUID.fromString("c7c29d3c-9c60-43a1-8e33-0d146749b340"), "Flo", "Triche"));
+        reports.getFromUUID(UUID.fromString("c7c29d3c-9c60-43a1-8e33-0d146749b340"));
     }
 
     @Override
     public void onDisable() {
         db.close();
-    }
-
-    public MySQL getMySQL() {
-        return mySQL;
     }
 
     public DatabaseManager getDatabaseManager() {

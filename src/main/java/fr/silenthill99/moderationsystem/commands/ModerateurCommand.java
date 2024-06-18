@@ -1,7 +1,7 @@
 package fr.silenthill99.moderationsystem.commands;
 
 import fr.silenthill99.moderationsystem.Main;
-import fr.silenthill99.moderationsystem.PlayerManager;
+import fr.silenthill99.moderationsystem.manager.PlayerManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

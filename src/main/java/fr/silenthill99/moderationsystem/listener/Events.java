@@ -2,7 +2,7 @@ package fr.silenthill99.moderationsystem.listener;
 
 import fr.silenthill99.moderationsystem.CustomItems;
 import fr.silenthill99.moderationsystem.Main;
-import fr.silenthill99.moderationsystem.PlayerManager;
+import fr.silenthill99.moderationsystem.manager.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

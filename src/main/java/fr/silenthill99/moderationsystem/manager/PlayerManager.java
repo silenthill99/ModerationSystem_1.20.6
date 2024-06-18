@@ -1,5 +1,7 @@
-package fr.silenthill99.moderationsystem;
+package fr.silenthill99.moderationsystem.manager;
 
+import fr.silenthill99.moderationsystem.CustomItems;
+import fr.silenthill99.moderationsystem.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

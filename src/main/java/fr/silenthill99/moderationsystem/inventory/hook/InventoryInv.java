@@ -1,7 +1,7 @@
 package fr.silenthill99.moderationsystem.inventory.hook;
 
 import fr.silenthill99.moderationsystem.CustomItems;
-import fr.silenthill99.moderationsystem.PlayerManager;
+import fr.silenthill99.moderationsystem.manager.PlayerManager;
 import fr.silenthill99.moderationsystem.inventory.AbstractInventory;
 import fr.silenthill99.moderationsystem.inventory.holder.InventoryHolder;
 import org.bukkit.entity.Player;
