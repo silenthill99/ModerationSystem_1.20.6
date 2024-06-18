@@ -41,40 +41,49 @@ public class Events implements Listener {
     }
 
     @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        if (PlayerManager.isInModerationMod(player)) {
+            PlayerManager.getFromPlayer(player).destroy();
+        }
+    }
+
+    @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
-        event.setCancelled(PlayerManager.isInModerationMod(player));
+        event.setCancelled(PlayerManager.isInModerationMod(player) || main.isFreeze(player));
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        event.setCancelled(PlayerManager.isInModerationMod(player));
+        event.setCancelled(PlayerManager.isInModerationMod(player) || main.isFreeze(player));
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        event.setCancelled(PlayerManager.isInModerationMod(player));
+        event.setCancelled(PlayerManager.isInModerationMod(player) || main.isFreeze(player));
     }
 
     @EventHandler
     public void onItemPickup(PlayerAttemptPickupItemEvent event) {
         Player player = event.getPlayer();
-        event.setCancelled(PlayerManager.isInModerationMod(player));
+        event.setCancelled(PlayerManager.isInModerationMod(player) || main.isFreeze(player));
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
-        event.setCancelled(PlayerManager.isInModerationMod(player));
+        event.setCancelled(PlayerManager.isInModerationMod(player) ||
+                main.isFreeze(player));
     }
 
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        event.setCancelled(PlayerManager.isInModerationMod(player));
+        event.setCancelled(PlayerManager.isInModerationMod(player) || main.isFreeze(player));
 
         ItemStack item = event.getItem();
         Action action = event.getAction();
@@ -108,7 +117,7 @@ public class Events implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
-        event.setCancelled(PlayerManager.isInModerationMod(player));
+        event.setCancelled(PlayerManager.isInModerationMod(player) || main.isFreeze(player));
     }
 
     @EventHandler
@@ -145,12 +154,16 @@ public class Events implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player)) return;
+        if (!(event.getEntity() instanceof Player player)) return;
         if (!(event.getDamager() instanceof Player damager)) return;
         ItemStack item = damager.getInventory().getItemInMainHand();
 
         if (PlayerManager.isInModerationMod(damager)) {
             event.setCancelled(!item.isSimilar(CustomItems.KB_TESTER.getItem()));
+        }
+
+        if (main.isFreeze(player)) {
+            event.setCancelled(true);
         }
 
     }
@@ -170,6 +183,14 @@ public class Events implements Listener {
                             ChatColor.WHITE + ": " + ChatColor.YELLOW + event.getMessage().substring(1));
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        if (main.getFreezedPlayers().containsKey(player.getUniqueId())) {
+            event.setTo(event.getFrom());
         }
     }
 }

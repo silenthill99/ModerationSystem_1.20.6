@@ -1,9 +1,11 @@
 package fr.silenthill99.moderationsystem;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+@SuppressWarnings("deprecation")
 public class PlayerManager {
 
     private static final Main main = Main.getInstance();
@@ -18,6 +20,17 @@ public class PlayerManager {
 
     public void init() {
         main.players.put(player.getUniqueId(), this);
+        main.moderateurs.add(player.getUniqueId());
+        player.sendMessage(ChatColor.GREEN + "Vous êtes à présent dans le mode modération !");
+        saveInventory();
+
+        player.setAllowFlight(true);
+        player.setFlying(true);
+
+        int slot = 0;
+        for (CustomItems items : CustomItems.values()) {
+            player.getInventory().setItem(slot++, items.getItem());
+        }
     }
 
     public static PlayerManager getFromPlayer(Player player) {
@@ -29,7 +42,14 @@ public class PlayerManager {
     }
 
     public void destroy() {
+        main.moderateurs.remove(player.getUniqueId());
         main.players.remove(player.getUniqueId());
+        player.getInventory().clear();
+        player.sendMessage(ChatColor.RED + "vous n'êtes à présent plus dans le mode modération");
+        giveInventory();
+        player.setAllowFlight(false);
+        player.setFlying(false);
+        setVanished(false);
     }
 
     public void saveInventory() {
