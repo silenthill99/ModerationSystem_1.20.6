@@ -1,8 +1,10 @@
 package fr.silenthill99.moderationsystem.inventory.hook;
 
 import fr.silenthill99.moderationsystem.ItemBuilder;
+import fr.silenthill99.moderationsystem.Main;
 import fr.silenthill99.moderationsystem.inventory.AbstractInventory;
 import fr.silenthill99.moderationsystem.inventory.holder.ReportHolder;
+import fr.silenthill99.moderationsystem.manager.Report;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,6 +18,7 @@ public class ReportInventory extends AbstractInventory<ReportHolder> {
     public ReportInventory() {
         super(ReportHolder.class);
     }
+
 
     @Override
     public void openInventory(Player player, Object... args) {
@@ -36,25 +39,17 @@ public class ReportInventory extends AbstractInventory<ReportHolder> {
     @Override
     public void manageInventory(InventoryClickEvent event, ItemStack current, Player player, ReportHolder holder) {
         Player target = holder.getTarget();
-        switch (current.getType()) {
-            case IRON_SWORD -> {
-                if (current.getItemMeta().getDisplayName().equals(ChatColor.RED + "ForceField")) {
-                    player.closeInventory();
-                    sendToModos(current.getItemMeta().getDisplayName(), target.getName());
-                    player.sendMessage(ChatColor.GREEN + "Vous avez bien signalé ce joueur !");
-                }
-            }
-            case BOW -> {
-                if (current.getItemMeta().getDisplayName().equals(ChatColor.RED + "SpamBow")) {
-                    player.closeInventory();
-                    sendToModos(current.getItemMeta().getDisplayName(), target.getName());
-                    player.sendMessage(ChatColor.GREEN + "Vous avez bien signalé ce joueur !");
-                }
-            }
-            default -> {
 
-            }
-        }
+        if (target == null) return;
+
+
+        player.closeInventory();
+        player.sendMessage(ChatColor.GREEN + "Vous avez bien signalé ce joueur !");
+
+        Main.getInstance().getReports().add(new Report(target.getUniqueId(), player.getName(),
+                current.getItemMeta().getDisplayName().substring(2)));
+        sendToModos(current.getItemMeta().getDisplayName(), target.getName());
+
     }
 
     private void sendToModos(String displayName, String targetName) {

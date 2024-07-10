@@ -128,16 +128,17 @@ public class Events implements Listener {
         if (!PlayerManager.isInModerationMod(player)) return;
 
         if (!(event.getRightClicked() instanceof Player target)) return;
-
-        /**
-         * Voir les signalements
+        if (!event.getHand().equals(EquipmentSlot.HAND)) return;
+        /*
+          Voir les signalements
          */
         if (item.isSimilar(CustomItems.REPORTS.getItem())) {
-            /**
-             * TODO
-             */
+
+            player.sendMessage(ChatColor.GRAY + "Voici la liste des signalements de " +
+                    ChatColor.WHITE + target.getName() + ChatColor.GRAY + ":");
+            main.getReports().getReports(player, target.getUniqueId());
+
         } else if (item.isSimilar(CustomItems.FREEZE.getItem())) {
-            if (!event.getHand().equals(EquipmentSlot.HAND)) return;
             if (main.getFreezedPlayers().containsKey(target.getUniqueId())) {
                 main.getFreezedPlayers().remove(target.getUniqueId());
                 target.sendMessage(ChatColor.GREEN + "Vous avez été unfreeze !");
