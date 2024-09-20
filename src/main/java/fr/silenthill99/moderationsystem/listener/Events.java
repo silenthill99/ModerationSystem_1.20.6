@@ -3,6 +3,7 @@ package fr.silenthill99.moderationsystem.listener;
 import fr.silenthill99.moderationsystem.CustomItems;
 import fr.silenthill99.moderationsystem.Main;
 import fr.silenthill99.moderationsystem.manager.PlayerManager;
+import fr.silenthill99.moderationsystem.manager.Report;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -136,7 +137,13 @@ public class Events implements Listener {
 
             player.sendMessage(ChatColor.GRAY + "Voici la liste des signalements de " +
                     ChatColor.WHITE + target.getName() + ChatColor.GRAY + ":");
-            main.getReports().getReports(player, target.getUniqueId());
+            List<Report> reports = main.getReports().getReports(target.getUniqueId());
+
+            for (Report r : reports) {
+                player.sendMessage("[" + ChatColor.AQUA + r.getDate() + ChatColor.WHITE + "] " + ChatColor.GREEN +
+                        "Signalé par : " + ChatColor.WHITE + r.getAuthor() + ChatColor.GREEN + " pour la raison suivante : "
+                + ChatColor.RED + r.getReason());
+            }
 
         } else if (item.isSimilar(CustomItems.FREEZE.getItem())) {
             if (main.getFreezedPlayers().containsKey(target.getUniqueId())) {

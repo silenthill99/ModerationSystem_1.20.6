@@ -31,7 +31,6 @@ public final class Main extends JavaPlugin {
 
     DatabaseManager db;
 
-    @SuppressWarnings("DataFlowIssue")
     @Override
     public void onEnable() {
         saveDefaultConfig();

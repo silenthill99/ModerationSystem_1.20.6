@@ -1,16 +1,14 @@
 package fr.silenthill99.moderationsystem.manager;
 
-import org.bukkit.entity.Player;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 public class Report {
-    private UUID uuid;
-    private String date;
-    private String author;
-    private String reason;
+    private final UUID uuid;
+    private final String date;
+    private final String author;
+    private final String reason;
 
     public Report(UUID uuid, String date, String author, String reason) {
         this.uuid = uuid;
